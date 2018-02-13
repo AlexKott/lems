@@ -3,7 +3,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FlowBabelWebpackPlugin = require('flow-babel-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
@@ -67,7 +66,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['.ts', '.js', '.json'],
     alias: {
       '@': resolve('src'),
     },
@@ -75,6 +74,12 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
+      {
+        test: /\.(ts)$/,
+        use: [
+          require.resolve('ts-loader'),
+        ],
+      },
       {
         test: /\.(js|jsx|mjs)$/,
         include: paths.appSrc,
@@ -115,7 +120,6 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
     }),
-    new FlowBabelWebpackPlugin(),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
