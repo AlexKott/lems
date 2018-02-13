@@ -1,14 +1,18 @@
 import LemController from './LemController';
+import Tickable from './Tickable';
 
 const GAME_INTERVAL: number = 1000;
 
 export default class Game {
   lemController: LemController;
+  subscribers: Array<Tickable>;
   isRunning: boolean;
 
   constructor() {
-    this.lemController = new LemController();
     this.isRunning = false;
+    this.lemController = new LemController();
+    this.subscribers = [];
+    this.subscribers.push(this.lemController);
   }
 
   start() {
@@ -22,8 +26,8 @@ export default class Game {
 
   tick() {
     if (this.isRunning) {
-      console.log('tick');
       setTimeout(this.tick.bind(this), GAME_INTERVAL);
+      this.subscribers.forEach(s => s.tick());
     }
   }
 }
