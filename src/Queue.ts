@@ -1,5 +1,5 @@
 export default class Queue {
-  queue: Array<Array<() => void>>;
+  private queue: Array<Array<() => void>>;
 
   constructor() {
     this.queue = [];
