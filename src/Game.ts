@@ -4,7 +4,7 @@ import Lem from './Lem';
 import LemController from './LemController';
 import Tickable from './Tickable';
 
-const GAME_INTERVAL: number = 40;
+const GAME_INTERVAL: number = 20;
 
 export default class Game {
   private isRunning: boolean;
