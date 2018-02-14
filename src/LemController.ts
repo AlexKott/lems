@@ -1,30 +1,30 @@
+import Area from './Area';
 import Lem from './Lem';
 import Queue from './Queue';
 import Tickable from './Tickable';
 
-const SPAWN_TIME: number = 10;
+const FIRST_SPAWN: number = 5;
+const SPAWN_TIME: number = 30;
+const MAX_LEMS: number = 10;
 
 export default class LemController implements Tickable {
-  public lems: Array<Lem>;
-  private maxLems: number;
+  private lems: Array<Lem>;
+  private area: Area;
   private queue: Queue;
-  private spawnPoint: { posX: number, posY: number };
 
-  constructor(
-    maxLems: number,
-    firstSpawnDelay: number,
-    spawnPoint: { posX: number, posY: number },
-  ) {
-
-    this.maxLems = maxLems;
-    this.spawnPoint = spawnPoint;
+  constructor(area: Area) {
     this.lems = [];
     this.queue = new Queue();
+    this.area = area;
 
-    for (let i = 0; i < maxLems; i++) {
-      const delay = firstSpawnDelay + (i * SPAWN_TIME);
+    for (let i = 0; i < MAX_LEMS; i++) {
+      const delay = FIRST_SPAWN + (i * SPAWN_TIME);
       this.queue.add(delay, this.spawn.bind(this));
     }
+  }
+
+  getLems() {
+    return this.lems;
   }
 
   tick() {
@@ -37,6 +37,6 @@ export default class LemController implements Tickable {
   }
 
   spawn() {
-    this.lems.push(new Lem(this.spawnPoint.posX, this.spawnPoint.posY));
+    this.lems.push(new Lem(this.area));
   }
 }

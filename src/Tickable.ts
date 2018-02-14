@@ -1,3 +1,3 @@
 export default interface Tickable {
-  tick();
+  tick() : void;
 }

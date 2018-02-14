@@ -1,5 +1,5 @@
 export default interface Drawable {
-  posX: number;
-  posY: number;
-  sign: string;
+  getPosX: () =>number;
+  getPosY: () => number;
+  getSign: () => string;
 }

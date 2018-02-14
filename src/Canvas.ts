@@ -17,7 +17,7 @@ export default class Canvas {
   draw(elements: Array<Drawable>) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     elements.forEach(element => {
-      this.ctx.fillText(element.sign, element.posX, element.posY);
+      this.ctx.fillText(element.getSign(), element.getPosX(), element.getPosY());
     });
   }
 }
