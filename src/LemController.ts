@@ -5,7 +5,7 @@ import Queue from './Queue';
 import Tickable from './interfaces/Tickable';
 
 const FIRST_SPAWN: number = 5;
-const SPAWN_TIME: number = 30;
+const SPAWN_TIME: number = 80;
 const MAX_LEMS: number = 10;
 const LEM_DIRECTION: number = 1;
 

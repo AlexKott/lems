@@ -5,8 +5,8 @@ import Tickable from './interfaces/Tickable';
 import { FLOOR, SPAWN, VOID, WALL } from './environments';
 
 const LEM_SIGN: string = 'Y';
-const LEM_WIDTH: number = 5;
-const LEM_HEIGHT: number = 8;
+const LEM_WIDTH: number = 12;
+const LEM_HEIGHT: number = 15;
 const FALL_INTERVAL: number = 1;
 const WALK_INTERVAL: number = 2;
 

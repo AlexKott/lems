@@ -27,6 +27,7 @@ export default class Canvas {
     };
 
     this.context.textBaseline = 'top';
+    this.context.font = '18px sans-serif';
     this.canvasElement.addEventListener('click', this.handleEvent.bind(this));
     this.canvasElement.addEventListener('mousemove', this.handleEvent.bind(this));
   }
@@ -43,9 +44,8 @@ export default class Canvas {
 
       if (isActive) {
         this.context.strokeRect(posX, posY, width, height);
-      } else {
-        this.context.strokeText(sign, posX, posY);
       }
+      this.context.strokeText(sign, posX, posY);
     });
   }
 
