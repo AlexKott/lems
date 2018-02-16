@@ -21,13 +21,25 @@ export default class Canvas {
     this.offsetX = Math.round(canvasOffset.left);
     this.offsetY = Math.round(canvasOffset.top);
 
+    this.context.textBaseline = 'top';
     this.canvasElement.addEventListener('click', this.handleClick.bind(this));
   }
 
   draw(elements: Array<Drawable>) {
     this.context.clearRect(0, 0, this.width, this.height);
     elements.forEach(element => {
-      this.context.fillText(element.getSign(), element.getPosX(), element.getPosY());
+      const posX = element.getPosX();
+      const posY = element.getPosY();
+      const width = element.getWidth();
+      const height = element.getHeight();
+      const sign = element.getSign();
+      const isActive = element.getIsActive();
+
+      if (isActive) {
+        this.context.strokeRect(posX, posY, width, height);
+      } else {
+        this.context.strokeText(sign, posX, posY);
+      }
     });
   }
 

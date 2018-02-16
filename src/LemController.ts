@@ -1,5 +1,6 @@
 import Area from './Area';
 import Lem from './Lem';
+import Point from './interfaces/Point';
 import Queue from './Queue';
 import Tickable from './interfaces/Tickable';
 
@@ -7,7 +8,6 @@ const FIRST_SPAWN: number = 5;
 const SPAWN_TIME: number = 30;
 const MAX_LEMS: number = 10;
 const LEM_DIRECTION: number = 1;
-const LEM_SIGN: string = 'Y';
 
 export default class LemController implements Tickable {
   private area: Area;
@@ -29,6 +29,10 @@ export default class LemController implements Tickable {
     return this.lems;
   }
 
+  spawn() {
+    this.lems.push(new Lem(this.area, LEM_DIRECTION));
+  }
+
   tick() {
     const next = this.queue.getNext();
     if (next && next.length) {
@@ -38,7 +42,27 @@ export default class LemController implements Tickable {
     this.lems.forEach(l => l.tick());
   }
 
-  spawn() {
-    this.lems.push(new Lem(this.area, LEM_DIRECTION, LEM_SIGN));
+  handleClick(clickTarget: Point) {
+    const lastLem: number = this.lems.length - 1;
+    const { posX, posY } = clickTarget;
+    let foundActive: boolean = false;
+
+    for (let i: number = lastLem; i >= 0; i--) {
+      const lem: Lem = this.lems[i];
+      const lemX: number = lem.getPosX();
+      const lemY: number = lem.getPosY();
+
+      if (posX >= lemX
+        && posX <= lemX + lem.getWidth()
+        && posY >= lemY
+        && posY <= lemY + lem.getHeight()
+        && !foundActive
+      ) {
+        foundActive = true;
+        lem.setActive(true);
+      } else {
+        lem.setActive(false);
+      }
+    }
   }
 }

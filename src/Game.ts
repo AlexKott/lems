@@ -44,6 +44,6 @@ export default class Game {
   }
 
   handleClick(clickTarget: Point) {
-    console.log(clickTarget);
+    this.lemController.handleClick(clickTarget);
   }
 }
