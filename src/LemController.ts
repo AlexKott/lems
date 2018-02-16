@@ -42,10 +42,18 @@ export default class LemController implements Tickable {
     this.lems.forEach(l => l.tick());
   }
 
-  handleClick(clickTarget: Point) {
+  handleClick(target: Point) {
+    const clickedLem = this.pointLem(target);
+
+    if (clickedLem) {
+      this.lems.forEach(lem => lem.setActive(false));
+      clickedLem.setActive(true);
+    }
+  }
+
+  pointLem(target: Point) : Lem | false {
     const lastLem: number = this.lems.length - 1;
-    const { posX, posY } = clickTarget;
-    let foundActive: boolean = false;
+    const { posX, posY } = target;
 
     for (let i: number = lastLem; i >= 0; i--) {
       const lem: Lem = this.lems[i];
@@ -56,13 +64,11 @@ export default class LemController implements Tickable {
         && posX <= lemX + lem.getWidth()
         && posY >= lemY
         && posY <= lemY + lem.getHeight()
-        && !foundActive
       ) {
-        foundActive = true;
-        lem.setActive(true);
-      } else {
-        lem.setActive(false);
+        return lem;
       }
     }
+
+    return false;
   }
 }

@@ -22,7 +22,8 @@ export default class Game {
     this.lemController = new LemController(this.area);
     this.subscribers = [];
 
-    this.canvas.addClickListener(this.handleClick.bind(this));
+    this.canvas.addListener('click', this.handleClick.bind(this));
+    this.canvas.addListener('mousemove', this.handleMouseMove.bind(this));
     this.subscribers.push(this.lemController);
   }
 
@@ -45,5 +46,14 @@ export default class Game {
 
   handleClick(clickTarget: Point) {
     this.lemController.handleClick(clickTarget);
+  }
+
+  handleMouseMove(target: Point) {
+    const isOverLem = !!this.lemController.pointLem(target);
+    if (isOverLem) {
+      document.body.style.cursor = 'crosshair';
+    } else {
+      document.body.style.cursor = 'initial';
+    }
   }
 }

@@ -8,21 +8,27 @@ export default class Canvas {
   height: number;
   offsetX: number;
   offsetY: number;
-  clickListeners: Array<(clickTarget: Point) => void>;
+  listeners: {
+    click: Array<(clickTarget: Point) => void>,
+    mousemove: Array<(clickTarget: Point) => void>,
+  };
 
   constructor(canvasElement: HTMLCanvasElement) {
     const canvasOffset = canvasElement.getBoundingClientRect();
-
     this.canvasElement = canvasElement;
     this.context = <CanvasRenderingContext2D> this.canvasElement.getContext('2d');
     this.width = this.canvasElement.width;
     this.height = this.canvasElement.height;
-    this.clickListeners = [];
     this.offsetX = Math.round(canvasOffset.left);
     this.offsetY = Math.round(canvasOffset.top);
+    this.listeners = {
+      click: [],
+      mousemove: [],
+    };
 
     this.context.textBaseline = 'top';
-    this.canvasElement.addEventListener('click', this.handleClick.bind(this));
+    this.canvasElement.addEventListener('click', this.handleEvent.bind(this));
+    this.canvasElement.addEventListener('mousemove', this.handleEvent.bind(this));
   }
 
   draw(elements: Array<Drawable>) {
@@ -43,15 +49,17 @@ export default class Canvas {
     });
   }
 
-  addClickListener(callback: (clickTarget: Point) => void) {
-    this.clickListeners.push(callback);
+  addListener(type: 'click' | 'mousemove', callback: (target: Point) => void) {
+    this.listeners[type].push(callback);
   }
 
-  handleClick(event: MouseEvent) {
-    const clickTarget = {
-      posX: event.clientX - this.offsetX,
-      posY: event.clientY - this.offsetY,
+  handleEvent(event: MouseEvent) {
+    if (event.type === 'click' || event.type === 'mousemove') {
+      const target = {
+        posX: event.clientX - this.offsetX,
+        posY: event.clientY - this.offsetY,
+      }
+      this.listeners[event.type].forEach(l => l(target));
     }
-    this.clickListeners.forEach(l => l(clickTarget));
   }
 }
