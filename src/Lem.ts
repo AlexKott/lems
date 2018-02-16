@@ -9,18 +9,21 @@ const WALK_INTERVAL: number = 2;
 
 export default class Lem implements Tickable, Drawable {
   private area: Area;
-  private direction: number = 1;
+  private direction: number;
   private posX: number;
   private posY: number;
   private queue: Queue;
-  private sign: string = 'Y';
+  private sign: string;
 
-  constructor(area: Area) {
+  constructor(area: Area, direction: number, sign: string) {
     const spawnPoint = area.getSpawnPoint();
+    this.area = area;
+    this.direction = direction;
     this.posX = spawnPoint.posX;
     this.posY = spawnPoint.posY;
-    this.area = area;
     this.queue = new Queue();
+    this.sign = sign;
+
     this.queue.add(WALK_INTERVAL, this.walk.bind(this));
   }
 

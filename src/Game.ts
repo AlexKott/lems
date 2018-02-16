@@ -2,23 +2,27 @@ import Area from './Area';
 import Canvas from './Canvas';
 import Lem from './Lem';
 import LemController from './LemController';
+import Point from './interfaces/Point';
 import Tickable from './interfaces/Tickable';
+import levelMap from './map.json';
 
 const GAME_INTERVAL: number = 20;
 
 export default class Game {
-  private isRunning: boolean;
-  private area : Area;
+  private area: Area;
   private canvas: Canvas;
+  private isRunning: boolean;
   private lemController: LemController;
   private subscribers: Array<Tickable>;
 
-  constructor() {
+  constructor(canvasElement: HTMLCanvasElement) {
+    this.area = new Area(levelMap);
+    this.canvas = new Canvas(canvasElement);
     this.isRunning = false;
-    this.subscribers = [];
-    this.area = new Area();
     this.lemController = new LemController(this.area);
-    this.canvas = new Canvas();
+    this.subscribers = [];
+
+    this.canvas.addClickListener(this.handleClick.bind(this));
     this.subscribers.push(this.lemController);
   }
 
@@ -37,5 +41,9 @@ export default class Game {
       this.subscribers.forEach(s => s.tick());
       this.canvas.draw(this.lemController.getLems());
     }
+  }
+
+  handleClick(clickTarget: Point) {
+    console.log(clickTarget);
   }
 }

@@ -1,12 +1,12 @@
 import { FLOOR, SPAWN, VOID, WALL } from './environments';
 import Point from './interfaces/Point';
-import { map } from './map';
 
 export default class Area {
+  private map:Array<Array<number>>;
   private spawnPoint: Point;
-  private map:Array<Array<number>> = map;
 
-  constructor() {
+  constructor(levelMap: Array<Array<number>>) {
+    this.map = levelMap;
     this.spawnPoint = this.findSpawnPoint();
   }
 
@@ -15,8 +15,8 @@ export default class Area {
   }
 
   findSpawnPoint(): Point {
-    const mapHeight = map.length;
-    const mapWidth = map[0].length;
+    const mapHeight = this.map.length;
+    const mapWidth = this.map[0].length;
     for (let yTile = 0; yTile < mapHeight; yTile++) {
       for (let xTile = 0; xTile < mapWidth; xTile++) {
         const envCode = this.map[yTile][xTile];

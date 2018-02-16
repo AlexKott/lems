@@ -6,16 +6,18 @@ import Tickable from './interfaces/Tickable';
 const FIRST_SPAWN: number = 5;
 const SPAWN_TIME: number = 30;
 const MAX_LEMS: number = 10;
+const LEM_DIRECTION: number = 1;
+const LEM_SIGN: string = 'Y';
 
 export default class LemController implements Tickable {
-  private lems: Array<Lem>;
   private area: Area;
+  private lems: Array<Lem>;
   private queue: Queue;
 
   constructor(area: Area) {
+    this.area = area;
     this.lems = [];
     this.queue = new Queue();
-    this.area = area;
 
     for (let i = 0; i < MAX_LEMS; i++) {
       const delay = FIRST_SPAWN + (i * SPAWN_TIME);
@@ -37,6 +39,6 @@ export default class LemController implements Tickable {
   }
 
   spawn() {
-    this.lems.push(new Lem(this.area));
+    this.lems.push(new Lem(this.area, LEM_DIRECTION, LEM_SIGN));
   }
 }

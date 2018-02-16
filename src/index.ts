@@ -1,20 +1,11 @@
 import Game from './Game';
 
-const game: Game = new Game();
-
 window.addEventListener('load', () => {
-  const startButton : HTMLElement | null = document.querySelector('#start-button');
-  const endButton : HTMLElement | null = document.querySelector('#end-button');
-  if (startButton && endButton) {
-    startButton.addEventListener('click', startGame);
-    endButton.addEventListener('click', endGame);
-  }
+  const canvasElement = <HTMLCanvasElement> document.querySelector('#canvas');
+  const startButton = <HTMLButtonElement> document.querySelector('#start-button');
+  const endButton =  <HTMLButtonElement> document.querySelector('#end-button');
+  const game: Game = new Game(canvasElement);
+
+  startButton.addEventListener('click', game.start.bind(game));
+  endButton.addEventListener('click', game.end.bind(game));
 });
-
-function startGame() {
-  game.start();
-}
-
-function endGame() {
-  game.end();
-}
