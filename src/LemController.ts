@@ -1,7 +1,7 @@
 import Area from './Area';
 import Lem from './Lem';
 import Queue from './Queue';
-import Tickable from './Tickable';
+import Tickable from './interfaces/Tickable';
 
 const FIRST_SPAWN: number = 5;
 const SPAWN_TIME: number = 30;

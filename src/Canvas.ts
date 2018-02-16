@@ -1,4 +1,4 @@
-import Drawable from './Drawable';
+import Drawable from './interfaces/Drawable';
 
 const CANVAS_WIDTH: number = 600;
 const CANVAS_HEIGHT: number = 400;

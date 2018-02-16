@@ -1,8 +1,8 @@
 import Area from './Area';
-import Drawable from './Drawable';
+import Drawable from './interfaces/Drawable';
 import Queue from './Queue';
-import Tickable from './Tickable';
-import { FLOOR, VOID, WALL } from './environments';
+import Tickable from './interfaces/Tickable';
+import { FLOOR, SPAWN, VOID, WALL } from './environments';
 
 const FALL_INTERVAL: number = 1;
 const WALK_INTERVAL: number = 2;
@@ -65,7 +65,7 @@ export default class Lem implements Tickable, Drawable {
       this.direction = this.direction * -1;
       this.queue.add(WALK_INTERVAL, this.walk.bind(this));
 
-    } else if (env === VOID) {
+    } else if (env === VOID || env === SPAWN) {
       this.posX = posX;
       this.posY = posY;
       this.queue.add(FALL_INTERVAL, this.fall.bind(this));

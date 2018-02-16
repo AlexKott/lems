@@ -2,7 +2,7 @@ import Area from './Area';
 import Canvas from './Canvas';
 import Lem from './Lem';
 import LemController from './LemController';
-import Tickable from './Tickable';
+import Tickable from './interfaces/Tickable';
 
 const GAME_INTERVAL: number = 20;
 
