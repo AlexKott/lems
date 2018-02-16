@@ -45,7 +45,7 @@ export default class Canvas {
       if (isActive) {
         this.context.strokeRect(posX, posY, width, height);
       }
-      this.context.strokeText(sign, posX, posY);
+      this.context.fillText(sign, posX, posY);
     });
   }
 

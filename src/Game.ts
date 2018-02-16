@@ -6,8 +6,6 @@ import Point from './interfaces/Point';
 import Tickable from './interfaces/Tickable';
 import levelMap from './map.json';
 
-const GAME_INTERVAL: number = 20;
-
 export default class Game {
   private area: Area;
   private canvas: Canvas;
@@ -29,16 +27,16 @@ export default class Game {
 
   start() {
     this.isRunning = true;
-    this.tick();
+    this.tick(0);
   }
 
   end() {
     this.isRunning = false;
   }
 
-  tick() {
+  tick(stamp: number) {
     if (this.isRunning) {
-      setTimeout(this.tick.bind(this), GAME_INTERVAL);
+      window.requestAnimationFrame(this.tick.bind(this));
       this.subscribers.forEach(s => s.tick());
       this.canvas.draw(this.lemController.getLems());
     }
