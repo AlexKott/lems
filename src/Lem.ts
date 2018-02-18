@@ -27,8 +27,9 @@ export default class Lem implements Tickable, Drawable {
     this.graphics = new Graphics(
       LEM_WIDTH,
       LEM_HEIGHT,
+      LEM_SIGN,
       this.isActive,
-      LEM_SIGN
+      true
     );
     this.posX = spawnPoint.posX;
     this.posY = spawnPoint.posY;

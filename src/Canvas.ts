@@ -36,19 +36,22 @@ export default class Canvas {
   }
 
   draw(element: Drawable) {
-    const posX = element.getPosX();
-    const posY = element.getPosY();
     const graphics = element.getGraphics();
-    const width = graphics.getWidth();
-    const height = graphics.getHeight();
-    const sign = graphics.getSign();
-    const hasBorder = graphics.getHasBorder();
+    const isVisible = graphics.getIsVisible();
+    if (isVisible) {
+      const posX = element.getPosX();
+      const posY = element.getPosY();
+      const width = graphics.getWidth();
+      const height = graphics.getHeight();
+      const sign = graphics.getSign();
+      const hasBorder = graphics.getHasBorder();
 
-    this.context.font = `${height}px sans-serif`;
-    this.context.fillText(sign, posX, posY);
+      this.context.font = `${height}px sans-serif`;
+      this.context.fillText(sign, posX, posY);
 
-    if (hasBorder) {
-      this.context.strokeRect(posX, posY, width, height);
+      if (hasBorder) {
+        this.context.strokeRect(posX, posY, width, height);
+      }
     }
   }
 

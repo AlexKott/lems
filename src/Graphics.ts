@@ -1,19 +1,22 @@
 export default class Graphics {
+  private isVisible: boolean;
+  private hasBorder: boolean;
   private width: number;
   private height: number;
-  private hasBorder: boolean;
   private sign: string;
 
   constructor(
     width: number,
     height: number,
+    sign: string,
     hasBorder: boolean,
-    sign: string
+    isVisible: boolean
   ) {
     this.width = width;
     this.height = height;
-    this.hasBorder = hasBorder;
     this.sign = sign;
+    this.hasBorder = hasBorder;
+    this.isVisible = isVisible;
   }
 
   getWidth() : number {
@@ -24,6 +27,10 @@ export default class Graphics {
     return this.height;
   }
 
+  getSign() : string {
+    return this.sign;
+  }
+
   setHasBorder(hasBorder: boolean) {
     this.hasBorder = hasBorder;
   }
@@ -32,7 +39,11 @@ export default class Graphics {
     return this.hasBorder;
   }
 
-  getSign() : string {
-    return this.sign;
+  setIsVisible(isVisible: boolean) {
+    this.isVisible = isVisible;
+  }
+
+  getIsVisible() : boolean {
+    return this.isVisible;
   }
 }

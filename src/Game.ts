@@ -53,10 +53,7 @@ export default class Game {
 
   handleClick(clickTarget: Point) {
     const activeLem = this.lemController.activateLem(clickTarget);
-
-    if (activeLem) {
-
-    }
+    this.actionBar.setActiveLem(activeLem);
   }
 
   handleMouseMove(target: Point) {
