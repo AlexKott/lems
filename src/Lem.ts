@@ -94,12 +94,4 @@ export default class Lem implements Tickable, Drawable {
   getGraphics() : Graphics {
     return this.graphics;
   }
-
-  getWidth() : number {
-    return this.graphics.getWidth();
-  }
-
-  getHeight() : number {
-    return this.graphics.getHeight();
-  }
 }

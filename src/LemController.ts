@@ -1,4 +1,5 @@
 import Area from './Area';
+import isTarget from './isTarget';
 import Lem from './Lem';
 import Point from './interfaces/Point';
 import Queue from './Queue';
@@ -55,18 +56,11 @@ export default class LemController implements Tickable {
 
   pointLem(target: Point) : Lem | null {
     const lastLem: number = this.lems.length - 1;
-    const { posX, posY } = target;
 
     for (let i: number = lastLem; i >= 0; i--) {
       const lem: Lem = this.lems[i];
-      const lemX: number = lem.getPosX();
-      const lemY: number = lem.getPosY();
 
-      if (posX >= lemX
-        && posX <= lemX + lem.getWidth()
-        && posY >= lemY
-        && posY <= lemY + lem.getHeight()
-      ) {
+      if (isTarget(lem, target)) {
         return lem;
       }
     }

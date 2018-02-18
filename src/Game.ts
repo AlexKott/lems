@@ -1,6 +1,7 @@
 import ActionBar from './ActionBar';
 import Area from './Area';
 import Canvas from './Canvas';
+import isTarget from './isTarget';
 import Lem from './Lem';
 import LemController from './LemController';
 import Point from './interfaces/Point';
@@ -51,15 +52,24 @@ export default class Game {
     this.canvas.draw(this.actionBar);
   }
 
-  handleClick(clickTarget: Point) {
-    const activeLem = this.lemController.activateLem(clickTarget);
-    this.actionBar.setActiveLem(activeLem);
+  handleClick(target: Point) {
+    const isActionBarClicked = isTarget(this.actionBar, target);
+    if (isActionBarClicked) {
+      console.log('action');
+    } else {
+      const activeLem = this.lemController.activateLem(target);
+      this.actionBar.setActiveLem(activeLem);
+    }
   }
 
   handleMouseMove(target: Point) {
-    const isOverLem = !!this.lemController.pointLem(target);
-    if (isOverLem) {
+    const isOverActiveBar = isTarget(this.actionBar, target);
+    if (isOverActiveBar) {
+      document.body.style.cursor = 'pointer';
+
+    } else if (!!this.lemController.pointLem(target)) {
       document.body.style.cursor = 'crosshair';
+
     } else {
       document.body.style.cursor = 'initial';
     }
