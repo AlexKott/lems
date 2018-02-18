@@ -10,11 +10,11 @@ export default class Area {
     this.spawnPoint = this.findSpawnPoint();
   }
 
-  getSpawnPoint() {
+  getSpawnPoint() : Point {
     return this.spawnPoint;
   }
 
-  findSpawnPoint(): Point {
+  findSpawnPoint() : Point {
     const mapHeight = this.map.length;
     const mapWidth = this.map[0].length;
     for (let yTile = 0; yTile < mapHeight; yTile++) {
@@ -29,14 +29,14 @@ export default class Area {
     throw new Error('No spawn point found in given map!');
   }
 
-  getEnvironment(posX: number, posY: number): string {
+  getEnvironment(posX: number, posY: number) : string {
     const tileX: number = Math.floor(posX / 10);
     const tileY: number = Math.floor(posY / 10);
     const envCode: number = this.map[tileY][tileX];
     return this.translateEnvironmentCode(envCode);
   }
 
-  translateEnvironmentCode(code: number): string {
+  translateEnvironmentCode(code: number) : string {
     switch(code) {
       case 1:
         return FLOOR;

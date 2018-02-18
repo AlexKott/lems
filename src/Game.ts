@@ -1,3 +1,4 @@
+import ActionBar from './ActionBar';
 import Area from './Area';
 import Canvas from './Canvas';
 import Lem from './Lem';
@@ -7,6 +8,7 @@ import Tickable from './interfaces/Tickable';
 import levelMap from './map.json';
 
 export default class Game {
+  private actionBar: ActionBar;
   private area: Area;
   private canvas: Canvas;
   private isRunning: boolean;
@@ -14,6 +16,7 @@ export default class Game {
   private subscribers: Array<Tickable>;
 
   constructor(canvasElement: HTMLCanvasElement) {
+    this.actionBar = new ActionBar(canvasElement.width, canvasElement.height);
     this.area = new Area(levelMap);
     this.canvas = new Canvas(canvasElement);
     this.isRunning = false;
@@ -38,12 +41,22 @@ export default class Game {
     if (this.isRunning) {
       window.requestAnimationFrame(this.tick.bind(this));
       this.subscribers.forEach(s => s.tick());
-      this.canvas.draw(this.lemController.getLems());
+      this.draw();
     }
   }
 
+  draw() {
+    this.canvas.clear();
+    this.canvas.drawMultiple(this.lemController.getLems());
+    this.canvas.draw(this.actionBar);
+  }
+
   handleClick(clickTarget: Point) {
-    this.lemController.handleClick(clickTarget);
+    const activeLem = this.lemController.activateLem(clickTarget);
+
+    if (activeLem) {
+
+    }
   }
 
   handleMouseMove(target: Point) {

@@ -1,5 +1,6 @@
 import Area from './Area';
 import Drawable from './interfaces/Drawable';
+import Graphics from './Graphics';
 import Queue from './Queue';
 import Tickable from './interfaces/Tickable';
 import { FLOOR, SPAWN, VOID, WALL } from './environments';
@@ -16,15 +17,19 @@ export default class Lem implements Tickable, Drawable {
   private isActive: boolean = false;
   private posX: number;
   private posY: number;
-  private width: number = LEM_WIDTH;
-  private height: number = LEM_HEIGHT;
-  private sign: string = LEM_SIGN;
+  private graphics: Graphics;
   private queue: Queue;
 
   constructor(area: Area, direction: number) {
     const spawnPoint = area.getSpawnPoint();
     this.area = area;
     this.direction = direction;
+    this.graphics = new Graphics(
+      LEM_WIDTH,
+      LEM_HEIGHT,
+      this.isActive,
+      LEM_SIGN
+    );
     this.posX = spawnPoint.posX;
     this.posY = spawnPoint.posY;
     this.queue = new Queue();
@@ -70,6 +75,7 @@ export default class Lem implements Tickable, Drawable {
 
   setActive(isActive: boolean) {
     this.isActive = isActive;
+    this.graphics.setHasBorder(isActive);
   }
 
   getIsActive() : boolean {
@@ -84,15 +90,15 @@ export default class Lem implements Tickable, Drawable {
     return this.posY;
   }
 
+  getGraphics() : Graphics {
+    return this.graphics;
+  }
+
   getWidth() : number {
-    return this.width;
+    return this.graphics.getWidth();
   }
 
   getHeight() : number {
-    return this.height;
-  }
-
-  getSign() : string {
-    return this.sign;
+    return this.graphics.getHeight();
   }
 }

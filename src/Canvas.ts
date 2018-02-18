@@ -27,26 +27,33 @@ export default class Canvas {
     };
 
     this.context.textBaseline = 'top';
-    this.context.font = '18px sans-serif';
     this.canvasElement.addEventListener('click', this.handleEvent.bind(this));
     this.canvasElement.addEventListener('mousemove', this.handleEvent.bind(this));
   }
 
-  draw(elements: Array<Drawable>) {
+  clear() {
     this.context.clearRect(0, 0, this.width, this.height);
-    elements.forEach(element => {
-      const posX = element.getPosX();
-      const posY = element.getPosY();
-      const width = element.getWidth();
-      const height = element.getHeight();
-      const sign = element.getSign();
-      const isActive = element.getIsActive();
+  }
 
-      if (isActive) {
-        this.context.strokeRect(posX, posY, width, height);
-      }
-      this.context.fillText(sign, posX, posY);
-    });
+  draw(element: Drawable) {
+    const posX = element.getPosX();
+    const posY = element.getPosY();
+    const graphics = element.getGraphics();
+    const width = graphics.getWidth();
+    const height = graphics.getHeight();
+    const sign = graphics.getSign();
+    const hasBorder = graphics.getHasBorder();
+
+    this.context.font = `${height}px sans-serif`;
+    this.context.fillText(sign, posX, posY);
+
+    if (hasBorder) {
+      this.context.strokeRect(posX, posY, width, height);
+    }
+  }
+
+  drawMultiple(elements: Array<Drawable>) {
+    elements.forEach(element => this.draw(element));
   }
 
   addListener(type: 'click' | 'mousemove', callback: (target: Point) => void) {

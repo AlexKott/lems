@@ -25,7 +25,7 @@ export default class LemController implements Tickable {
     }
   }
 
-  getLems() {
+  getLems() : Array<Lem> {
     return this.lems;
   }
 
@@ -42,13 +42,14 @@ export default class LemController implements Tickable {
     this.lems.forEach(l => l.tick());
   }
 
-  handleClick(target: Point) {
+  activateLem(target: Point) : Lem | false {
     const clickedLem = this.pointLem(target);
 
     if (clickedLem) {
       this.lems.forEach(lem => lem.setActive(false));
       clickedLem.setActive(true);
     }
+    return clickedLem;
   }
 
   pointLem(target: Point) : Lem | false {
